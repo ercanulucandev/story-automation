@@ -1,0 +1,30 @@
+# Story Automation
+
+AI ile YouTube için 9:16 (Shorts) veya 16:9 hikaye videoları üreten yerel uygulama.
+
+**Akış:** Senaryo (yapay zeka) → Seslendirme (ElevenLabs / OpenAI) → Görseller (Flux / Imagen, fal.ai) → Video klipler (Kling / Hailuo / Veo / Seedance, fal.ai) → Montaj + kelime vurgulu altyazı + müzik (FFmpeg)
+
+## Kurulum
+
+1. Node.js 20+ ve FFmpeg kurulu olmalı (`ffmpeg -version` çalışmalı).
+2. `npm install`
+3. `npm run dev` → http://localhost:3000
+4. **Ayarlar** sayfasından API anahtarlarını gir:
+   - Senaryo yapay zekası (gerekli): senaryo, başlık ve açıklama
+   - fal.ai (gerekli): görsel ve video
+   - ElevenLabs veya OpenAI: seslendirme
+
+## Kullanım
+
+- **Yeni Video**: tür, dil, süre, format, görsel stil, video modeli, ses, altyazı ve müzik seçimi. Sağdaki panelde tahmini maliyet görünür.
+- "Senaryoyu onaylamak istiyorum" açıksa, senaryo yazıldıktan sonra üretim durur. Sahneleri düzenleyip **Onayla ve devam et**'e basarsın.
+- Proje sayfasında her sahnenin sesini, görselini veya klibini tek tek yeniden üretebilirsin. Video otomatik olarak yeniden birleştirilir.
+- Arka plan müzikleri için `data/music/` klasörüne mp3/wav dosyası koy.
+
+## Yapı
+
+- `src/lib/catalog.ts`: türler, diller, stiller, model listeleri ve fiyatlar (yeni model eklemek için burayı düzenle)
+- `src/lib/pipeline.ts`: üretim adımları ve FFmpeg montajı
+- `src/lib/providers/`: senaryo, seslendirme ve görsel/video servis adapter'ları
+- `src/lib/captions.ts`: TikTok tarzı ASS altyazı üretimi
+- `data/`: projeler, üretilen dosyalar ve ayarlar (git'e girmez)

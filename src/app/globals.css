@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-bg: #07070b;
+  --color-panel: #0f0f16;
+  --color-panel-2: #151520;
+  --color-line: #23232f;
+  --color-muted: #8b8b9e;
+  --color-accent: #8b5cf6;
+  --color-accent-2: #d946ef;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: #ececf1;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background-image:
+    radial-gradient(900px 500px at 85% -10%, rgba(139, 92, 246, 0.12), transparent 60%),
+    radial-gradient(700px 400px at -10% 110%, rgba(217, 70, 239, 0.08), transparent 60%);
+  background-attachment: fixed;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #a78bfa, #f0abfc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  box-shadow: 0 8px 30px -10px rgba(168, 85, 247, 0.6);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a38;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+input[type="range"] {
+  accent-color: var(--color-accent);
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #14141d 0%, #1f1f2c 50%, #14141d 100%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s linear infinite;
+}
