@@ -14,6 +14,13 @@ AI ile YouTube için 9:16 (Shorts) veya 16:9 hikaye videoları üreten yerel uyg
    - fal.ai (gerekli): görsel ve video
    - ElevenLabs veya OpenAI: seslendirme
 
+## Güvenlik
+
+- Uygulama yerel kullanım içindir. Sunucu yalnızca `127.0.0.1` adresini dinler, ağdaki diğer cihazlar erişemez.
+- API yalnızca bu bilgisayardan ve uygulamanın kendi sayfalarından gelen istekleri kabul eder. Başka sitelerden gelen istekler engellenir.
+- `/api/media` yalnızca proje ve müzik klasörlerindeki video, ses ve görsel dosyalarını sunar. Ayar dosyaları asla sunulmaz.
+- API anahtarları `data/settings.json` içinde saklanır ve git'e girmez. Uygulamayı internete açmayın.
+
 ## Kullanım
 
 - **Yeni Video**: tür, dil, süre, format, görsel stil, video modeli, ses, altyazı ve müzik seçimi. Sağdaki panelde tahmini maliyet görünür.

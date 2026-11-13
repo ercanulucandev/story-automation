@@ -14,11 +14,34 @@ const TYPES: Record<string, string> = {
   ".webp": "image/webp",
 };
 
+const SAFE_NAME = /^[A-Za-z0-9_-][A-Za-z0-9_.-]*$/;
+const SAFE_ID = /^[A-Za-z0-9_-]+$/;
+
+/**
+ * Sadece izin verilen medya dosyalarının yolunu döndürür:
+ *   projects/<projeId>/<dosya>  veya  music/<dosya>
+ * Uzantısı medya olmayan dosyalar (settings.json, project.json vb.) asla sunulmaz.
+ */
+function resolveMediaPath(parts: string[]): string | null {
+  let rel: string[];
+  if (parts.length === 3 && parts[0] === "projects" && SAFE_ID.test(parts[1]) && SAFE_NAME.test(parts[2])) {
+    rel = parts;
+  } else if (parts.length === 2 && parts[0] === "music" && SAFE_NAME.test(parts[1])) {
+    rel = parts;
+  } else {
+    return null;
+  }
+  if (!TYPES[path.extname(rel[rel.length - 1]).toLowerCase()]) return null;
+  const file = path.resolve(DATA_DIR, ...rel);
+  if (!file.startsWith(DATA_DIR + path.sep)) return null;
+  return file;
+}
+
 // data/ klasöründeki medya dosyalarını (Range desteğiyle) sunar
 export async function GET(req: Request, ctx: RouteContext<"/api/media/[...path]">) {
   const { path: parts } = await ctx.params;
-  const file = path.resolve(DATA_DIR, ...parts);
-  if (!file.startsWith(DATA_DIR + path.sep)) return new Response("Forbidden", { status: 403 });
+  const file = resolveMediaPath(parts);
+  if (!file) return new Response("Not found", { status: 404 });
   let stat: fs.Stats;
   try {
     stat = fs.statSync(file);
